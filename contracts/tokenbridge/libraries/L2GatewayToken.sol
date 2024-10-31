@@ -21,6 +21,7 @@ pragma solidity ^0.8.0;
 import "./aeERC20.sol";
 import "./BytesParser.sol";
 import "../arbitrum/IArbToken.sol";
+import { FHE, euint128, inEuint128 } from "@fhenixprotocol/contracts/FHE.sol";
 
 /**
  * @title Standard (i.e., non-custom) contract used as a base for different L2 Gateways
@@ -75,5 +76,32 @@ abstract contract L2GatewayToken is aeERC20, IArbToken {
      */
     function bridgeBurn(address account, uint256 amount) external virtual override onlyGateway {
         _burn(account, amount);
+    }
+
+    // ===== FHENIX =====
+
+    /**
+     * @notice Mint tokens on L2. Callable path is L1Gateway depositToken (which handles L1 escrow), which triggers L2Gateway, which calls this
+     * @param account recipient of tokens
+     * @param amount amount of tokens minted
+     */
+    function encBridgeMint(
+        address account,
+        inEuint128 calldata amount
+    ) external virtual override onlyGateway {
+        _encMint(account, amount);
+    }
+
+    /**
+     * @notice Burn tokens on L2.
+     * @dev only the token bridge can call this
+     * @param account owner of tokens
+     * @param amount amount of tokens burnt
+     */
+    function encBridgeBurn(
+        address account,
+        inEuint128 calldata amount
+    ) external virtual override onlyGateway {
+        _encBurn(account, amount);
     }
 }

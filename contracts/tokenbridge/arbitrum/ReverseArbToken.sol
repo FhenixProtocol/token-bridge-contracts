@@ -37,4 +37,12 @@ abstract contract ReverseArbToken is IArbToken {
     function bridgeBurn(address, uint256) public override {
         revert("BRIDGE_BURN_NOT_IMPLEMENTED");
     }
+
+    function encBridgeMint(address, inEuint128 calldata) public override {
+        revert("ENC_BRIDGE_MINT_NOT_IMPLEMENTED");
+    }
+
+    function encBridgeBurn(address, inEuint128 calldata) public override {
+        revert("ENC_BRIDGE_BURN_NOT_IMPLEMENTED");
+    }
 }

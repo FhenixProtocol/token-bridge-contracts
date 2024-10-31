@@ -32,11 +32,7 @@ abstract contract TransferAndCallToken is ERC20Upgradeable, ITransferAndCall {
 
     // PRIVATE
 
-    function contractFallback(
-        address _to,
-        uint256 _value,
-        bytes memory _data
-    ) private {
+    function contractFallback(address _to, uint256 _value, bytes memory _data) private {
         ITransferAndCallReceiver receiver = ITransferAndCallReceiver(_to);
         receiver.onTokenTransfer(msg.sender, _value, _data);
     }

@@ -26,6 +26,8 @@
 // solhint-disable-next-line compiler-version
 pragma solidity >=0.6.9 <0.9.0;
 
+import { inEuint128 } from "@fhenixprotocol/contracts/FHE.sol";
+
 interface IArbToken {
     /**
      * @notice should increase token supply by amount, and should (probably) only be callable by the L1 bridge.
@@ -36,6 +38,16 @@ interface IArbToken {
      * @notice should decrease token supply by amount, and should (probably) only be callable by the L1 bridge.
      */
     function bridgeBurn(address account, uint256 amount) external;
+
+    /**
+     * @notice should increase token supply by amount, and should (probably) only be callable by the L1 bridge.
+     */
+    function encBridgeMint(address account, inEuint128 calldata amount) external;
+
+    /**
+     * @notice should decrease token supply by amount, and should (probably) only be callable by the L1 bridge.
+     */
+    function encBridgeBurn(address account, inEuint128 calldata amount) external;
 
     /**
      * @return address of layer 1 token
